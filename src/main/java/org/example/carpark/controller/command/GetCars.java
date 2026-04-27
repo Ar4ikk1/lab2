@@ -14,7 +14,16 @@ public class GetCars implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        List<Car> cars = carService.getAllCars();
+        String brand = request.getParameter(AttributesHolder.BRAND);
+
+        List<Car> cars;
+
+        if (brand != null && !brand.trim().isEmpty()) {
+            cars = carService.getCarsByBrand(brand.trim());
+        } else {
+            cars = carService.getAllCars();
+        }
+
         request.setAttribute(AttributesHolder.CARS, cars);
 
         return PagesHolder.CARS;

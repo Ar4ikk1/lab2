@@ -5,25 +5,46 @@
     <meta charset="UTF-8">
     <title>Автопарк - Головна</title>
     <style>
+        * {
+            box-sizing: border-box;
+            font-weight: normal !important;
+            font-family: 'Segoe UI';
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f4f7f9;
+            margin: 0;
+            padding-top: 100px;
             display: flex;
             justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
+            align-items: flex-start;
+            min-height: 100vh;
+            color: #333;
         }
+
         .container {
             text-align: center;
-            background: white;
+            background-color: white;
+            width: 500px;
             padding: 50px;
             border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            max-width: 500px;
+            box-shadow: 0 4px 12px #e0e0e0;
         }
-        h1 { color: #2c3e50; margin-bottom: 20px; }
-        p { color: #666; margin-bottom: 30px; line-height: 1.6; }
+
+        h1 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        p {
+            color: #666666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
         .btn {
             display: inline-block;
             padding: 15px 30px;
@@ -34,9 +55,9 @@
             border-radius: 8px;
             transition: background-color 0.3s, transform 0.2s;
         }
+
         .btn:hover {
             background-color: #218838;
-            transform: translateY(-2px);
         }
     </style>
 </head>

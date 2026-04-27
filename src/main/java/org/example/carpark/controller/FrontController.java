@@ -27,19 +27,16 @@ public class FrontController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    private void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String commandKey = getMethod(request) + CommandHolder.DELIMITER + getPath(request);
         logger.debug("Шукаємо команду за ключем: " + commandKey);
 
@@ -75,15 +72,12 @@ public class FrontController extends HttpServlet {
         }
 
         String regex = "/" + RegExp.NUMBER;
-        response.sendRedirect(request.getRequestURI()
-                .replaceAll(regex, "")
-                .replaceAll("/delete", "") + "?" + AttributesHolder.ERROR_MESSAGE + "=" + error);
+        response.sendRedirect(request.getRequestURI().replaceAll(regex, "").replaceAll("/delete", "") + "?" + AttributesHolder.ERROR_MESSAGE + "=" + error);
         logger.error("Перенаправлення через помилку: " + AttributesHolder.ERROR_MESSAGE);
     }
 
     private void checkIfErrorIsPresent(HttpServletRequest request) {
-        request.setAttribute(AttributesHolder.ERROR_MESSAGE,
-                request.getParameter(AttributesHolder.ERROR_MESSAGE));
+        request.setAttribute(AttributesHolder.ERROR_MESSAGE, request.getParameter(AttributesHolder.ERROR_MESSAGE));
     }
 
     private boolean isRedirected(String path) {

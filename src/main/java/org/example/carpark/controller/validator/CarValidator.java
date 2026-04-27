@@ -4,6 +4,7 @@ import org.example.carpark.model.entity.Car;
 import utils.AttributesHolder;
 import utils.ErrorMessages;
 
+import java.time.Year;
 import java.util.regex.Pattern;
 
 public class CarValidator implements Validator<Car> {
@@ -29,6 +30,13 @@ public class CarValidator implements Validator<Car> {
         }
         if(!licensePlatePattern.matcher(car.getLicensePlate()).matches()){
             reject(errors, AttributesHolder.LICENSE_PLATE, ErrorMessages.LICENSE_PLATE_INVALID);
+        }
+        int currentYear = Year.now().getValue();
+        if (car.getYear() < 1900 || car.getYear() > currentYear) {
+            reject(errors, AttributesHolder.YEAR, ErrorMessages.YEAR_INVALID);
+        }
+        if (car.getCarPark() == null || car.getCarPark().getId() == 0) {
+            reject(errors, AttributesHolder.CAR_PARK_ID, ErrorMessages.CAR_PARK_SELECT_INVALID);
         }
         return !errors.hasError();
     }

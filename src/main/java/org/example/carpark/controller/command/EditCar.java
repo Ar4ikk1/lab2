@@ -10,6 +10,7 @@ import org.example.carpark.model.entity.Car;
 import org.example.carpark.model.entity.CarPark;
 import org.example.carpark.service.CarParkService;
 import org.example.carpark.service.CarService;
+import org.example.carpark.service.exception.ServiceException;
 import utils.AttributesHolder;
 import utils.PagesHolder;
 import utils.PathsHolder;
@@ -26,10 +27,16 @@ public class EditCar implements Command{
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Car car = buildCar(request);
         Errors errors = new Errors();
+
         if (carValidator.validate(car, errors)) {
-            carService.update(car);
-            response.sendRedirect(PathsHolder.CARS);
-            return FrontController.REDIRECT;
+            try {
+                carService.update(car);
+                response.sendRedirect(PathsHolder.CARS);
+                return FrontController.REDIRECT;
+            } catch (ServiceException e) {
+                errors.addMessage(AttributesHolder.LICENSE_PLATE, e.getMessageKey());
+                errors.setHasErrors(true);
+            }
         }
 
         request.removeAttribute(AttributesHolder.ERROR_MESSAGE);
@@ -38,7 +45,6 @@ public class EditCar implements Command{
         List<CarPark> carParks = carParkService.getAll();
         request.setAttribute(AttributesHolder.CAR_PARKS, carParks);
         request.setAttribute(AttributesHolder.CAR, car);
-        request.setAttribute(AttributesHolder.CAR_PARKS, request.getAttribute(AttributesHolder.CAR_PARKS));
 
         return PagesHolder.CAR;
     }

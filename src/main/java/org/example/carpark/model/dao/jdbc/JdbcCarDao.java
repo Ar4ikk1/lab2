@@ -4,7 +4,6 @@ import org.example.carpark.model.dao.CarDao;
 import org.example.carpark.model.dao.exception.DaoException;
 import org.example.carpark.model.entity.Car;
 import org.example.carpark.model.entity.CarPark;
-import org.example.carpark.model.entity.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

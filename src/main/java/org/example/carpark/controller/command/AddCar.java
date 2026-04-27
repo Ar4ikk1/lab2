@@ -10,6 +10,7 @@ import org.example.carpark.model.entity.Car;
 import org.example.carpark.model.entity.CarPark;
 import org.example.carpark.service.CarParkService;
 import org.example.carpark.service.CarService;
+import org.example.carpark.service.exception.ServiceException;
 import utils.AttributesHolder;
 import utils.PagesHolder;
 import utils.PathsHolder;
@@ -27,9 +28,14 @@ public class AddCar implements Command {
         Errors errors = new Errors();
 
         if (carValidator.validate(car, errors)) {
-            carService.create(car);
-            response.sendRedirect(PathsHolder.CARS);
-            return FrontController.REDIRECT;
+            try {
+                carService.create(car);
+                response.sendRedirect(PathsHolder.CARS);
+                return FrontController.REDIRECT;
+            } catch (ServiceException e) {
+                errors.addMessage(AttributesHolder.LICENSE_PLATE, e.getMessageKey());
+                errors.setHasErrors(true);
+            }
         }
 
         request.removeAttribute(AttributesHolder.ERROR_MESSAGE);
